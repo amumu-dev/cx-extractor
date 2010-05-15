@@ -1,0 +1,533 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=gb2312" />
+	<title>126网易免费邮--你的专业电子邮局</title>
+	<meta content="中文专业免费邮箱，邮箱伴侣，随身邮，邮箱贺卡，自写短信，免费网易网盘，网络硬盘，网络记事本，rss阅读，Free Email" name="keywords">
+	<meta content="网易126邮箱--专业电子邮局提供免费网络硬盘网络硬盘.126网易免费邮是网易公司顷力打造的专业电子邮局，3G免费空间，支持超大20兆附件。126邮箱使用创新Ajax技术， 同等网络环境下，页面响应时间减少90％以上，垃圾邮件及病毒有效拦截率超过98％和99.8％。" name="description">
+	<meta name="robots" content="index, follow" />
+	<meta name="googlebot" content="index, follow" />
+	<link rel="shortcut icon" href="http://www.126.com/favicon.ico" />
+	<link href="http://mimg.126.com/index/2009/css/style_090916.css" rel="stylesheet" type="text/css" />
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+var gIEVersion = "";	//浏览器名字
+var gVersionNum = 0;	//浏览器版本号
+function fCheck(){
+	var bOk = false;
+	var s = "";
+	var fm = document.form;
+	s = fm.style.value;
+
+	fm.user.value = fTrim(fm.user.value); //Trim the input value.
+	if(!fCheckCookie()){
+		return false;
+	}
+	if( fm.user.value =="") {
+		document.getElementById("error_div").innerHTML = "请输入你的用户名";
+		fm.user.focus();
+		return false;
+	}
+
+	if( fm.password.value.length =="") {
+		document.getElementById("error_div").innerHTML = "请输入你的密码";
+		fm.password.focus();
+		return false;
+	}
+	var remUser = fm.remUser.checked?true:false;
+	/*
+	if( remUser){
+		fm.autocomplete="on";
+	}else{
+		fm.autocomplete="off";
+	}
+	*/
+	var secure = fm.secure;
+	var url;
+	if(secure.checked){
+		url = "https://reg.163.com/logins.jsp";
+	}else{
+		url = "http://reg.163.com/login.jsp";
+	}
+	url +="?type=1&product=mail126&url=http://entry.mail.126.com/cgi/ntesdoor?hid%3D10010102%26lightweight%3D1%26";
+	if( fm.secure.checked )
+		url += "verifycookie%3D1%26";
+	url += "language%3D0%26style%3D" + s ;
+	try{
+		var sMailSpeed = getCookie("mailspeed");
+		if(sMailSpeed){
+			url += "%26webname_prefix%3D"+sMailSpeed.split("_")[0];
+		}
+	}catch(exp){}
+	fm.action = url;
+	var ati = fm.user.value.indexOf( "@");
+	if( ati != -1 )
+		fm.user.value = fm.user.value.substring(0, ati);
+	visitordata.setVals( [fm.user.value,fm.style.value,fm.secure.checked?1:0 ], true );
+	visitordata.store();
+	if(!fm.remUser.checked){
+		//setCookie('ntes_mail_noremember','true',true);
+	}else{
+		fm.savelogin.value = 1;
+	}
+	fm.username.value = fm.user.value + "@126.com";
+	return true;
+}
+
+function fTrim(str)
+{
+	return str.replace(/(^\s*)|(\s*$)/g, "");
+}
+
+function fGetIEVersion()
+{
+	var IEAppName   = window.navigator.appName;						//得到当前浏览器的名.
+	var IEversion	= window.navigator.appVersion;					//得到当前浏览器的版本说明
+	if(IEAppName.indexOf("Microsoft")<0){
+		gIEVersion = IEAppName;
+		return 0;
+	}
+	var isOpera = window.navigator.userAgent.indexOf("Opera") > -1;
+	if(isOpera){
+		gIEVersion = "Opera";
+		return 0;
+	}
+
+	var k=IEversion.indexOf("MSIE");					//查找IE的版本号
+	if(k>=0){
+		k+=4;
+		var j=IEversion.indexOf(";",k);
+		if(j<0){
+			j=IEversion.length-1;
+		}
+		IEversion	=IEversion.substring(k,j)*1;				//得到IE的版本号，并且数字化
+		gIEVersion = "MSIE: "+IEversion;
+		if(IEversion >= 6){										//如果版本号6.0以上，
+			return 6;
+		}else if( IEversion >= 5.5 && IEversion < 6 ){
+			return 5.5;
+		}else if( IEversion >= 5 && IEversion <5.5){
+			return 5;
+		}
+		else{
+			return 0;
+		}
+	}else{
+		gIEVersion =  window.navigator.appVersion;
+		return 0;
+	}
+}
+gVersionNum = fGetIEVersion();
+
+function Cookie( document, name, domain )
+{
+	this.$document = document;
+	this.$name = name;
+	this.$expiration = new Date(2099,12,31);
+	this.$domain = domain;
+	this.data = null;
+}
+Cookie.prototype.store = function()
+{
+	var cookieval = "";
+	if( this.data != null)
+	{
+		for( var i=0; i<this.data.length;i++)
+		{
+			cookieval += this.data[i].join(":") + "&";
+		}
+	}
+	if( cookieval != "" && cookieval.charAt( cookieval.length-1) == "&" )
+		cookieval = cookieval.substring( 0,cookieval.length-1);
+	var cookie = this.$name + "=" + cookieval + ";expires=" + this.$expiration.toGMTString() + ";domain=" + this.$domain;
+	window.document.cookie = cookie;
+	var cookie = "NETEASE_SSN=" + document.getElementsByName("user")[0].value + ";expires=" + this.$expiration.toGMTString() + ";domain=" + this.$domain;
+	window.document.cookie = cookie;
+}
+Cookie.prototype.load = function()
+{
+	var allcookies = this.$document.cookie;
+	if( allcookies == "") return false;
+	var start = allcookies.indexOf( this.$name + "=" );
+	if( start == -1) return false;
+	start += this.$name.length +1;
+	var end = allcookies.indexOf( ";", start );
+	if( end == -1) end = allcookies.length;
+	var cookieval= allcookies.substring( start, end );
+	var a = cookieval.split("&");
+	for( var i=0;i<a.length; i++)
+		a[i] = a[i].split(':');
+	//用户名:风格:安全
+	this.data = a;
+	return true;
+}
+Cookie.prototype.setVals = function( a, flag )
+{
+	if( this.data == null)
+	{
+		if( flag )
+		{
+			this.data = [];
+			this.data[0] = a;
+		}
+	}
+	else
+	{
+		this.data[0][0] = a[0];
+		if( flag)
+			return;
+		else
+			this.data = null;
+	}
+}
+
+
+//*** For Login UserName.
+function fInitUser()
+{
+	var fm = window.document.form;
+	var name = "";
+	if( visitordata.data != null)
+	{
+		name = visitordata.data[0][0];
+		//fm.remUser.checked = true;
+		fm.autocomplete="on";
+	}else{
+		fm.autocomplete="off";
+		//fm.remUser.checked = getCookie("ntes_mail_noremember")!="true";
+	}
+
+
+	if( name != ""){
+		fm.user.value = name;
+		fm.password.focus();
+	}else{
+		fm.user.focus();
+	}
+}
+function fCheckCookie(){
+	var secure = document.getElementsByName("secure");
+	var cookieEnabled=(navigator.cookieEnabled)? true : false;
+	if (typeof navigator.cookieEnabled=="undefined" && !cookieEnabled){
+		document.cookie="testcookie";
+		cookieEnabled=(document.cookie=="testcookie")? true : false;
+		document.cookie="";
+	}
+	if(secure.length>0){
+		if(secure[0].checked && !cookieEnabled){
+			window.alert("您好，您的浏览器设置禁止使用cookie。您登录邮箱时选中了“增强安全性”选项，该选项要求浏览器启用cookie设置。\n\n您可以选择以下的其中一个方法登录邮箱：\n1：设置您的浏览器，启用cookie设置，再重新登录。\n2：或者登录时取消选中“增强安全性”选项，但是您的登录安全性将会降低。");
+			return false;
+		}
+	}
+	return true;
+}
+function fSetLogType(){
+	var logType = getCookie("logType");
+	var login_select = document.getElementById("login_select");
+	if(logType == "dm"||logType == "dm3"){
+		login_select.selectedIndex = 1;
+	}else if(logType == "js3"){
+		login_select.selectedIndex = 2;
+	}else if(logType == "jy"||logType == "jy3"){
+		login_select.selectedIndex = 3;
+	}else{
+		login_select.selectedIndex = 0;
+	}
+}
+function getCookie(name) {
+   var search = name + "="
+   if(document.cookie.length > 0) {
+      offset = document.cookie.indexOf(search)
+      if(offset != -1) {
+         offset += search.length
+         end = document.cookie.indexOf(";", offset)
+         if(end == -1) end = document.cookie.length
+         return unescape(document.cookie.substring(offset, end))
+      }
+      else return ""
+   }
+}
+function saveLoginType(){
+	var login_select = document.getElementById("login_select");
+	var sType = "";
+	switch(login_select.selectedIndex){
+		case 0:
+			sType = "df";
+			break;
+		case 1:
+			sType = "dm3";
+			break;
+		case 2:
+			sType = "js3";
+			break;
+		case 3:
+			sType = "jy3";
+			break;
+		default:
+			sType = "dm3";
+	}
+	document.cookie = "logType="+ sType +";expires="+  (new Date(2099,12,31)).toGMTString() +";domain=126.com";
+}
+var gAppName,gVersion;
+function fVoidIE5(){
+	fGetUserAgen();
+	if(gAppName == "msie" && gVersion < 6){
+		var obj = document.getElementById("secure");
+		obj.checked = false;
+		obj.disabled = true;
+	}
+}
+function fGetUserAgen(){
+	var sUserAgent = window.navigator.userAgent;
+	var sAppName = "";
+	var sVersion = "";
+	if(sUserAgent.indexOf("MSIE")>-1){
+		sAppName   = "msie";
+		sVersion	= sUserAgent.replace(/.+MSIE/gi,"").replace(/;.+/gi,"") - 0;
+	}else if(sUserAgent.toUpperCase().indexOf("FIREFOX")>-1){
+		sAppName = "firefox";
+		sVersion = sUserAgent.replace(/.+Firefox\//gi,"").replace(/\(.*\)/g,"") - 0;
+	}else if(sUserAgent.toUpperCase().indexOf("NETSCAPE")>-1){
+		sAppName = "netscape";
+		sVersion = sUserAgent.replace(/.+NETSCAPE\//gi,"").replace(/\(.*\)/g,"") - 0;
+	}
+	gAppName = sAppName; // 浏览器类型
+	gVersion = sVersion; // 版本号
+}
+function $( id ){return document.getElementById( id );}
+
+
+
+var visitordata = new Cookie( document, "nts_mail_user", "126.com");
+visitordata.load();
+
+function fEvent(sType,oInput){
+	switch (sType){
+		case "focus" :
+			oInput.isfocus = true;
+			oInput.style.backgroundColor='#FFFFD8';
+		case "mouseover" :
+			oInput.style.borderColor = '#99E300';
+			break;
+		case "blur" :
+			oInput.isfocus = false;
+			oInput.style.backgroundColor="";
+		case "mouseout" :
+			if(!oInput.isfocus){
+				oInput.style.borderColor='#A1BCA3';
+			}
+			break;
+	}
+}
+
+function fSetSpeedInfoSpan(){
+var oSpan = document.getElementById("speedInfoSpan");
+var sMailSpeed = getCookie("mailspeed");
+if(sMailSpeed){
+	var sName = "";
+	var sParam = sMailSpeed.split("_")[0];
+	switch(sParam){
+		case "t":
+			sName = "电信";
+			break;
+		case "c":
+			sName = "网通";
+			break;
+		case "e":
+			sName = "教育网";
+			break;
+		default :
+			sName = "默认";
+	}
+	oSpan.innerHTML = "(当前："+sName+")";
+}else{
+	oSpan.style.display = "none";
+}
+}
+function fCheckAutoLoginCookie(){
+try{
+	var sSInfo = getCookie("S_INFO");
+	var sPInfo = getCookie("P_INFO");
+	if(sPInfo){
+		var aInfo = sPInfo.split("|");
+		var sTime = aInfo[1];
+		var sState = aInfo[2];
+		var nTimeDiff = (new Date()).getTime()-(sTime+"000");
+	}
+	if(!location.hash&&sPInfo&&sState=="1"&&nTimeDiff<14*24*60*60*1000){
+		location.href='http://entry.mail.126.com/cgi/ntesdoor?hid=10010102&lightweight=1&verifycookie=1&language=0';
+	}
+}catch(exp){}
+}
+fCheckAutoLoginCookie();
+//-->
+</SCRIPT>
+</head>
+<body>
+<div class="page" id="divPage">
+	<div class="head">
+		<a href="javascript:;" title="设置网易126邮箱为浏览器首页" onClick="this.style.behavior='url(#default#homepage)';this.setHomePage('http://www.126.com');">设为主页</a> | <a href="http://mail.163.com" target="_blank">163免费邮</a> | <a href="http://www.yeah.net" target="_blank">Yeah.net免费邮</a> | <a href="http://www.188.com" target="_blank">188</a> | <a href="http://vip.163.com" target="_blank">Vip</a> | <a href="http://qiye.163.com" target="_blank">企业邮箱</a> | <a href="http://help.163.com/special/007525FQ/126mail.html?b09abh1" target="_blank">帮助</a>
+	</div>
+	<div class="content">
+
+		<div class="logo">
+			<h1><img src="http://mimg.126.net/logo/126logo.gif" alt="126网易免费邮" /></h1>
+			<h2>你的专业电子邮局</h2>
+		</div>
+		<div class="login">
+			<h3>登录126网易邮箱</h3>
+			<form method="post" action="http://entry.126.com/cgi/login" name="form" onSubmit="return fCheck()">
+			<input name="domain" type="hidden" value="126.com" />
+			<input name="language" type="hidden" value="0" />
+			<input name="bCookie" type="hidden" value="" />
+			<input name="username" type="hidden" value="" />
+			<input name="savelogin" type="hidden" value="" />
+				<div class="fi">
+					<label class="lb">用户名</label>
+					<input id="iptUser" name="user"  type="text" class="ipt-t no-ime" onfocus="this.className+=' ipt-t-focus'" onblur="this.className='ipt-t no-ime'" tabindex="1" />
+					<strong class="domain"><span>@126.com</span></strong>
+				</div>
+				<div class="fi">
+					<label class="lb">密　码</label>
+					<input id="iptPwd" type="password" class="ipt-t" onfocus="this.className+=' ipt-t-focus'" onblur="this.className='ipt-t no-ime'" name="password" tabindex="2" maxlength="20" />
+					<a tabindex="7" class="foget" href="http://reg.163.com/RecoverPasswd1.shtml?from=mail126" target="_blank">忘记密码？</a>
+				</div>
+				<div class="fi">
+					<label class="lb">版　本</label>
+					<select name="style" id="login_select" tabindex="3">
+						<option value="-1" selected="selected">　 　　　　默　 　认</option>
+						<option value="23">　 　　　　逍遥　3.0</option>
+						<option value="21">　 　　　　极速　3.0</option>
+						<option value="3">　 　　　　简约　3.0</option>
+					  </select>
+				</div>
+				<div class="fi fi-nolb">
+					<label class="autologin" onMouseOver="document.getElementById('autoLoginDiv').style.display='block'" onMouseOut="document.getElementById('autoLoginDiv').style.display='none'" for="rem_U"><input tabindex="4" type="checkbox" class="ipt-c" name="remUser" id="rem_U" />两周内自动登录</label>
+					<div id="autoLoginDiv">为了您的信息安全，请不要在网吧或公用电脑上使用此功能！</div>
+					<label class="ssl" for="secure"><input tabindex="5" class="ipt-c" type="checkbox" value="" name="secure" id="secure" checked="checked" />SSL安全登录</label>
+				</div>
+				<div class="fi fi-btn">
+					<input type="submit" class="ipt-b" value="登　录" onmouseover="this.className+=' ipt-b-hover'" onmouseout="this.className='ipt-b'" name="enter.x" tabindex="6" onClick="setCookie('ntes_mail_firstpage','normal');saveLoginType();" />
+					<span class="err" id="error_div"></span>
+				</div>
+				<div class="fi fi-nolb">
+					<a tabindex="7" href="/mailspeed/" target="_blank" class="chkspd">测速并更换服务器</a> <span style="color:#999" id="speedInfoSpan"></span>
+				</div>
+				<SCRIPT LANGUAGE="JavaScript">
+				<!--
+					fSetSpeedInfoSpan();
+				//-->
+				</SCRIPT>
+			</form>
+			<script>fInitUser();fSetLogType();fVoidIE5();</script>
+			<div class="reg">
+				<span>还没有126网易免费邮？</span>
+				<a tabindex="8" class="btn" href="http://reg.email.163.com/mailregAll/reg0.jsp?from=126mail" target="_blank" id="lnkReg">立即注册</a>
+			</div>
+		</div>
+		<div class="intro intro-1" id="divIntro">
+			<div class="introtxt introtxt-1">
+				<ul>
+					<li>您可以使用 <a href="http://wp.126.com/" target="_blank">网易网盘</a> ，随时存，随地取。</li>
+					<li>您还可以使用 <a href="http://sdy.163.com/" target="_blank">闪电邮</a> 在桌面随时提醒邮件到达，快速收发邮件。</li>
+					<li>在 <a href="http://bbx.mail.126.com" target="_blank">百宝箱</a> 里您可以查星座，订机票，看小说，学做菜…</li>
+				</ul>
+			</div>
+			<div class="introtxt introtxt-2">
+				<ul>
+					<li>在 <a href="http://zhidao.mail.126.com" target="_blank">邮箱知道</a> 里，您可以 <a href="http://zhidao.mail.126.com/zhidao/newquiz.jsp" target="_blank">提出问题</a>，由网友为您实时解答更快更有效</li>
+					<li>您也可以帮别人 <a href="http://zhidao.mail.126.com/zhidao/browse/browse.do?tid=0" target="_blank">解答疑问</a>，同时获得邮箱积分</li>
+					<li>您还可以对网易免费邮 <a href="http://zhidao.mail.126.com/zhidao/newsugg.jsp" target="_blank">提出建议</a>，代表3亿邮箱用户说出改进想法</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<div class="zxdt">
+			<h3><a href="http://help.163.com/special/00752CUI/126mail_cpgd.html?a45aba1" target="_blank">最新动态</a></h3>
+			<ul>
+				<li>
+					<a href="http://tech.163.com/09/1015/11/5LLMP9E1000915BF.html" target="_blank">
+						网易邮件加速全国六成网民受益
+					</a>
+				</li>
+				<li>
+					<a href="http://tech.163.com/09/1029/22/5MQVK2EI000915BF.html" target="_blank">
+						网易引领邮箱安全新标准
+					</a>
+				</li>
+				<li>
+					<a href="http://qiye.163.com/home.htm" target="_blank">
+						海外邮件发不出、收不到怎么办？
+					</a>
+				</li>
+			</ul>
+			<span class="end"></span>
+		</div>
+		<div class="copyright">
+			<div class="inner">
+				<a href="http://2010.163.com/" class="logo2010" target="_blank"><img src="http://mimg.126.net/logo/2010logo_new.gif" alt="网易 广州2010年亚运会赞助商"/></a>
+				<a href="http://corp.163.com/index_gb.html" target="_blank">关于网易</a><a href="http://mail.blog.163.com/" target="_blank">邮箱官方博客</a><a href="http://www.188.com/" target="_blank">财富邮</a><!--<a href="http://smsmail.163.com/newsmsmail/eaw_index.jsp" target="_blank">随身邮</a><a href="http://mscan.163.com/pay/payIndex.jsp" target="_blank">邮箱伴侣</a>--><a href="http://cards.163.com/" target="_blank">精美贺卡</a><a href="http://safesurf.china.cn/data_form.php" target="_blank">举报违法信息</a><a href="http://help.163.com/" target="_blank">客户服务</a><br/><span>网易公司版权所有 &copy; 1997-<script src="http://mimg.163.com/copyright/year.js" language="javascript"></script></span>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$("divIntro").className = "intro intro-" + Math.round(($("divIntro").getElementsByTagName("DIV").length-1) * Math.random() + 1);
+
+	window.onresize = function(){
+		var minh = 720;
+		var minw = 960;
+		$("divPage").style.height = document.documentElement.offsetHeight < minh ? minh+"px" : "100%";
+		$("divPage").style.width = document.documentElement.offsetWidth < minw ? minw+"px" : "auto";
+	}
+
+	window.onresize();
+
+	if( $("iptUser").value=="") {
+		$("iptUser").focus();
+	} else {
+		$("iptPwd").focus();
+	}
+
+</script>
+</body>
+<script language="JavaScript">
+<!--
+function setCookie(name, value, isForever) {
+	document.cookie = name + "=" + escape(value) + ";domain=126.com"  + (isForever?";expires="+  (new Date(2099,12,31)).toGMTString():"");
+}
+
+var sRef = location.search;
+var ArrFrom = sRef.split("from=");
+if(ArrFrom[1] == null || ArrFrom[1] == "undefined"){
+	ArrFrom[1] = "";
+}
+var gFrom = ArrFrom[1];
+document.getElementById("lnkReg").href += gFrom;
+window.onresize();
+//-->
+</script>
+<!--DLEOANNA-->
+<a href="http://uinfo.mail.163.com/cgi-bin/hseed/two.pl"></a>
+
+<!-- 预加载逍遥js -->
+<iframe src="about:blank" style="display:none" id="frmDm3"></iframe>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+	try{
+		var frmDm3 = $("frmDm3");
+		var oDoc = frmDm3.contentWindow.document;
+		oDoc.open();
+		oDoc.write('<html><head><scr'+'ipt>window.onerror=function(){return true;}</scr'+'ipt></head><body></body></html>');
+		oDoc.close();
+		var oJs = oDoc.createElement("script");
+		oJs.setAttribute("src", "http://mimg.126.net/p/dm3style/js/0906031436/engine1.js");
+		oJs.setAttribute("type", "text/javascript");
+		oDoc.body.appendChild(oJs);
+	}catch(e){}
+
+//-->
+</SCRIPT>
+</html>

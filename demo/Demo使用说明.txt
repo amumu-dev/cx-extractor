@@ -1,0 +1,11 @@
+
+
+【推荐使用Java版Demo】
+
+
+Java版Demo:
+直接双击运行run.bat即可，需要联网。
+
+
+Perl版Demo:
+详见Perl目录下的使用说明。
