@@ -1,7 +1,19 @@
+/**
+ * @author Xin Chen
+ * Created on 2009-11-11
+ * Updated on 2010-08-09
+ * Email:  xchen@ir.hit.edu.cn
+ * Blog:   http://hi.baidu.com/爱心同盟_陈鑫
+ */
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+
+
+/**
+ * TextExtractor功能测试类.
+ */
 
 public class UseDemo {
 	
@@ -19,8 +31,7 @@ public class UseDemo {
 
 
 		/* 注意：本处只为展示抽取效果，不处理网页编码问题，getHTML只能接收GBK编码的网页，否则会出现乱码 */
-		System.out.println("正在请求并获得【" + args[0] + "】的源码，请等待... ...");
-		String content = getHTML(args[0]);
+		String content = getHTML("http://ent.qq.com/a/20100417/000119.htm");
 
 		// http://ent.sina.com.cn/y/2010-04-18/08332932833.shtml
 		// http://ent.qq.com/a/20100416/000208.htm
@@ -36,7 +47,7 @@ public class UseDemo {
 		 */
 		//TextExtract.setThreshold(76); // 默认值86
 
-		System.out.println("got html, extracting content... \n");
+		System.out.println("got html");
 		System.out.println(TextExtract.parse(content));
 	}
 

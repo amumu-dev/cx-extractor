@@ -1,7 +1,19 @@
+/**
+ * @author Xin Chen
+ * Created on 2009-11-11
+ * Updated on 2010-08-09
+ * Email:  xchen@ir.hit.edu.cn
+ * Blog:   http://hi.baidu.com/爱心同盟_陈鑫
+ */
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+
+
+/**
+ * TextExtractor功能测试类.
+ */
 
 public class UseDemo {
 	

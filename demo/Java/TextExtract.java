@@ -1,6 +1,7 @@
 /**
  * @author Xin Chen
  * Created on 2009-11-11
+ * Updated on 2010-08-09
  * Email:  xchen@ir.hit.edu.cn
  * Blog:   http://hi.baidu.com/爱心同盟_陈鑫
  */
@@ -14,33 +15,33 @@ import java.util.List;
  * 采用了<b>基于行块分布函数</b>的方法，为保持通用性没有针对特定网站编写规则。
  * </p>
  * @author  Chen Xin
- * @version 1.0, 11/11/09
+ * @version 1.0, 2009-11-11
  */
 public class TextExtract {
 	
 	private static List<String> lines;
-	private final static int BL_BLOCK;
-	private static int THRESHOLD;
-	private static String  html        ;
-	private static boolean flag		   ;
-	private static int 	   start	   ;
-	private static int 	   end		   ;
-	private static StringBuilder text  ;
-	private static ArrayList<Integer> indexDistribution ;
+	private final static int blocksWidth;
+	private static int threshold;
+	private static String html;
+	private static boolean flag;
+	private static int start;
+	private static int end;
+	private static StringBuilder text;
+	private static ArrayList<Integer> indexDistribution;
 	
 	static {
 		lines = new ArrayList<String>();
 		indexDistribution = new ArrayList<Integer>();
 		text = new StringBuilder();
-		BL_BLOCK 	= 3;
-		flag 		= false;
+		blocksWidth = 3;
+		flag = false;
 		/* 当待抽取的网页正文中遇到成块的新闻标题未剔除时，只要增大此阈值即可。*/
 		/* 阈值增大，准确率提升，召回率下降；值变小，噪声会大，但可以保证抽到只有一句话的正文 */
-		THRESHOLD	= 86;   
+		threshold	= 86;   
 	}
 	
-	public static void setThreshold(int value) {
-		THRESHOLD = value;
+	public static void setthreshold(int value) {
+		threshold = value;
 	}
 
 	/**
@@ -84,9 +85,9 @@ public class TextExtract {
 		lines = Arrays.asList(html.split("\n"));
 		indexDistribution.clear();
 		
-		for (int i = 0; i < lines.size() - BL_BLOCK; i++) {
+		for (int i = 0; i < lines.size() - blocksWidth; i++) {
 			int wordsNum = 0;
-			for (int j = i; j < i + BL_BLOCK; j++) { 
+			for (int j = i; j < i + blocksWidth; j++) { 
 				lines.set(j, lines.get(j).replaceAll("\\s+", ""));
 				wordsNum += lines.get(j).length();
 			}
@@ -99,8 +100,8 @@ public class TextExtract {
 		text.setLength(0);
 		
 		for (int i = 0; i < indexDistribution.size() - 1; i++) {
-			if (indexDistribution.get(i) > THRESHOLD && ! boolstart) {
-				if (indexDistribution.get(i+1).intValue()    != 0 
+			if (indexDistribution.get(i) > threshold && ! boolstart) {
+				if (indexDistribution.get(i+1).intValue() != 0 
 					|| indexDistribution.get(i+2).intValue() != 0
 					|| indexDistribution.get(i+3).intValue() != 0) {
 					boolstart = true;
@@ -124,8 +125,7 @@ public class TextExtract {
 				}
 				String str = tmp.toString();
 				//System.out.println(str);
-				//System.out.println("*******************************\n");
-				if (str.contains("Copyright")  || str.contains("版权所有")) continue; 
+				if (str.contains("Copyright")  || str.contains("版权所有") ) continue; 
 				text.append(str);
 				boolstart = boolend = false;
 			}
