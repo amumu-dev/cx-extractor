@@ -31,7 +31,7 @@ public class UseDemo {
 
 
 		/* 注意：本处只为展示抽取效果，不处理网页编码问题，getHTML只能接收GBK编码的网页，否则会出现乱码 */
-		String content = getHTML("http://ent.qq.com/a/20100417/000119.htm");
+		String content = getHTML(args[0]);
 
 		// http://ent.sina.com.cn/y/2010-04-18/08332932833.shtml
 		// http://ent.qq.com/a/20100416/000208.htm
