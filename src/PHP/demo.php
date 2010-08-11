@@ -1,62 +1,93 @@
-﻿<?php # Script - demo.php
-	// set the running time limit of the script to 15 min
-	set_time_limit( 60 * 15 );
-	
-	// set the directory of page file and extracted page text
-	$sourceDir = 'pageFile/';
-	$textDir = 'pageText/';
-	
-	// create the directory to store the useful information
-	mkdir( $textDir );
-	mkdir( 'mid' );
-	mkdir( 'line_len' );
-	mkdir( 'bl_size' );
-	
-	// set the number of file to be processed
-	$fileNum = 10;
-	$BL_BLOCK = 3;
-	
-	require_once( 'class.textExtract.php' );
-	
-	for( $j = 1; $j <= $fileNum; $j++ ) {
-		// 获得网页内容
-		$fileName = $sourceDir .  $j . '.htm';
-		$content = file_get_contents( $fileName );
-		
-		$iTextExtractor = new textExtract( $content, $BL_BLOCK );
-		$text = $iTextExtractor->getPlainText();
-		
-		$lineNum = count( $iTextExtractor->textLines );
-		echo $lineNum . '<br />';
-		
-		// 输出预处理后得到的结果
-		$midFileName = 'mid/mid_' . $j . '.txt';
-		$fod = fopen( $midFileName, "w" );
-		foreach( $iTextExtractor->textLines as $line ) {
-			fprintf( $fod, "%s\n", $line );
-		}
-		fclose( $fod );
-		
-		// 输出经过预处理后每行的长度
-		$lineLenFileName = 'line_len/line_len_' . $j . '.txt';
-		$fod = fopen( $lineLenFileName, "w" );
-		foreach( $iTextExtractor->textLines as $line ) {
-			fprintf( $fod, "%s\n", strlen($line) );
-		}
-		fclose( $fod );
-		
-		// 输出行块内容的长度
-		$blSizeFileName = 'bl_size/bl_size_' . $j . '.txt';
-		$fptr = fopen( $blSizeFileName, "w" );
-		foreach( $iTextExtractor->blksLen as $blkLen ) {
-			fprintf( $fptr, "%d\n", $blkLen );
-		}
-		fclose( $fptr );
-		
-		// 输出正文内容
-		$textFileName = $textDir . $j . '.html';
-		$fod = fopen( $textFileName, "w" );
-		fprintf( $fod, "%s\n", $text );
-		fclose( $fod );
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=GBK" />
+	<title>网页正文提取演示系统</title>
+	<style type="text/css">
+	#allcontent {
+		font-family: Georgia, "Times New Roman", Times, serif;
+		width: 800px;
 	}
-?>
+	#title {
+		font-size: 30px;
+	}
+	.des {
+		font-size: 20px;
+		font-style: bold;
+		color: blue;
+	}
+	#text, #lf {
+		text-align: left;
+	}
+	#gap {
+		border-style: outset;
+		border-top-width: 10px;
+		border-top-color: gray;
+	}
+	#copyright {
+		margin-top: 60px;
+		clear: both;
+		font-size: 12px;
+	}
+	</style>
+</head>
+
+<body>
+	<center>
+		<div id="allcontent">
+		<div id="title"><p>网页正文提取演示</p></div>
+		<?php
+			if(isset($_POST['url'])) {
+				set_time_limit( 60 * 10 );
+				require_once( 'class.textExtract.php' );
+				
+				$rawPageCode = file_get_contents( $_POST['url'] );
+				
+				$pattern = '/charset(\s*?)=(\s*?)(.*?)"/i';
+				preg_match( $pattern, $rawPageCode, $matches );
+				
+				$tmp = substr( $matches[3], 0, 2 );
+				if( strtoupper($tmp) != 'GB' ) {
+					$replacement = 'charset=GBK"';
+					$rawPageCode = preg_replace( $pattern, $replacement, $rawPageCode );
+					
+					$iTextExtractor = new textExtract( $rawPageCode );
+					$text = $iTextExtractor->getPlainText();
+					
+					file_put_contents( 'mid.txt', $text );
+					$text = file_get_contents( 'mid.txt' );
+				} else {
+					$iTextExtractor = new textExtract( $rawPageCode );
+					$text = $iTextExtractor->getPlainText();
+					
+					file_put_contents( 'mid.txt', $text );
+					$text = file_get_contents( 'mid.txt' );
+					$text = iconv( 'GBK', 'UTF-8//IGNORE', $text );
+				}
+				
+				unlink( 'mid.txt' );
+				
+				echo '<form method="post" action="demo.php">
+						<span class="des">网址：</span><input type="text" name="url" size="60" />
+						<input type="submit" name="submit" value="提取" />
+					  </form>';
+				echo '<p id="gap"><?p>';
+				echo '<p id="lf" class="des">正文：</p>';
+				echo '<p id="text">' . $text . '</p>';
+			} else {
+				echo '<form method="post" action="demo.php">
+						<span class="des">网址：</span><input type="text" name="url" size="60" />
+						<input type="submit" name="submit" value="提取" />
+					  </form>';
+			}
+		?>
+		</div>
+		<div id="copyright">
+			&copy; 2010&nbsp;
+			<a target="_blank" href="http://www.insun.hit.edu.cn">智能技术与自然语言处理实验室</a>&nbsp;|&nbsp;
+			<a target="_blank" href="http://www.hit.edu.cn">哈尔滨工业大学</a>&nbsp;|&nbsp;
+			<a href="mailto:wfxuan@insun.hit.edu.cn">联系我们</a>
+		</div>
+	</center>
+</body>
+</html>

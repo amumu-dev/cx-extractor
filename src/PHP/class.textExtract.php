@@ -1,4 +1,4 @@
-﻿<?php # Script - class.textExtract.php
+<?php # Script - class.textExtract.php
 /**
  * textExtract - text extraction class
  * Created on 2010-08-10
@@ -75,7 +75,7 @@ class textExtract {
 		$replacement = '';
 		$content = preg_replace( $pattern, $replacement, $content );
 		
-		// 3. Java Script
+		// 3. JavaScript
 		$pattern = '/<script.*?>.*?<\/script>/si';
 		$replacement = '';
 		$content = preg_replace( $pattern, $replacement, $content );
@@ -164,8 +164,11 @@ class textExtract {
 			$curTextLen = 0;
 			$portion = '';
 			while( ($i < $blkNum) && ($this->blksLen[$i] != 0) ) {
-				$portion .= $this->textLines[$i];
-				$curTextLen += $this->blksLen[$i];
+				if( $this->textLines[$i] != '' ) {
+					$portion .= $this->textLines[$i];
+					$portion .= '<br />';
+					$curTextLen += strlen( $this->textLines[$i] );
+				}
 				$i++;
 			}
 			if( $curTextLen > $maxTextLen ) {
@@ -176,7 +179,6 @@ class textExtract {
 			}
 		}
 		
-		echo ($start + 1) . '<br />' . ($end + 1) . '<br />';
 		return $this->text;
 	}
 }
