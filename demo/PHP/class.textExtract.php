@@ -13,6 +13,12 @@ class textExtract {
 	///////////////////////////////////
 	
 	/**
+	 * record the web page's url
+	 * @var string
+	 */
+	public $url         = '';
+	
+	/**
 	 * record the web page's source code
 	 * @var string
 	 */
@@ -43,19 +49,52 @@ class textExtract {
 	 */
 	public $blkSize;
 	
+	/**
+	 * record whether the web page's encoding is 'gb*'
+	 * @var bool
+	 */
+	public $isGB;
+	
 	///////////////////////////////////
 	// METHODS
 	///////////////////////////////////
 	
 	/**
 	 * Set the value of relevant members
-	 * @param string $_rawPageCode
+	 * @param string $_url
 	 * @param int $_blkSize
 	 * @return void
 	 */
-	function __construct( $_rawPageCode, $_blkSize = 3 ) {
-		$this->rawPageCode = $_rawPageCode;
-		$this->blkSize     = $_blkSize;
+	function __construct( $_url, $_blkSize = 3 ) {
+		$this->url = $_url;
+		$this->blkSize = $_blkSize;
+	}
+	
+	/**
+	 * Get the web page's source code
+	 * @return void
+	 */
+	function getPageCode() {
+		$this->rawPageCode = file_get_contents( $this->url );
+	}
+	
+	/**
+	 * Transform the web page's source code according to its encoding,
+	 * and set the value of member $isGB for correctly display
+	 * @return void
+	 */
+	function procEncoding() {
+		$pattern = '/charset(\s*?)=(\s*?)(.*?)"/i';
+		preg_match( $pattern, $this->rawPageCode, $matches );
+		
+		$tmp = substr( $matches[3], 0, 2 );
+		if( strtoupper($tmp) != 'GB' ) {
+			$this->isGB = false;
+			$replacement = 'charset=GBK"';
+			$this->rawPageCode = preg_replace( $pattern, $replacement, $this->rawPageCode );
+		} else {
+			$this->isGB = true;
+		}
 	}
 	
 	/**
@@ -75,7 +114,7 @@ class textExtract {
 		$replacement = '';
 		$content = preg_replace( $pattern, $replacement, $content );
 		
-		// 3. JavaScript
+		// 3. Java Script
 		$pattern = '/<script.*?>.*?<\/script>/si';
 		$replacement = '';
 		$content = preg_replace( $pattern, $replacement, $content );
@@ -148,6 +187,8 @@ class textExtract {
 	 * @return string
 	 */
 	function getPlainText() {
+		$this->getPageCode();
+		$this->procEncoding();
 		$preProcText = $this->preProcess();
 		$this->getTextLines( $preProcText );
 		$this->calBlocksLen();

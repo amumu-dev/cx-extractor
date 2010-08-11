@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=GBK" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>网页正文提取演示系统</title>
 	<style type="text/css">
 	#allcontent {
@@ -41,31 +41,10 @@
 				set_time_limit( 60 * 10 );
 				require_once( 'class.textExtract.php' );
 				
-				$rawPageCode = file_get_contents( $_POST['url'] );
+				$iTextExtractor = new textExtract( $_POST['url'] );
+				$text = $iTextExtractor->getPlainText();
 				
-				$pattern = '/charset(\s*?)=(\s*?)(.*?)"/i';
-				preg_match( $pattern, $rawPageCode, $matches );
-				
-				$tmp = substr( $matches[3], 0, 2 );
-				if( strtoupper($tmp) != 'GB' ) {
-					$replacement = 'charset=GBK"';
-					$rawPageCode = preg_replace( $pattern, $replacement, $rawPageCode );
-					
-					$iTextExtractor = new textExtract( $rawPageCode );
-					$text = $iTextExtractor->getPlainText();
-					
-					file_put_contents( 'mid.txt', $text );
-					$text = file_get_contents( 'mid.txt' );
-				} else {
-					$iTextExtractor = new textExtract( $rawPageCode );
-					$text = $iTextExtractor->getPlainText();
-					
-					file_put_contents( 'mid.txt', $text );
-					$text = file_get_contents( 'mid.txt' );
-					$text = iconv( 'GBK', 'UTF-8//IGNORE', $text );
-				}
-				
-				unlink( 'mid.txt' );
+				if( $iTextExtractor->isGB ) $text = iconv( 'GBK', 'UTF-8//IGNORE', $text );
 				
 				echo '<form method="post" action="demo.php">
 						<span class="des">网址：</span><input type="text" name="url" size="60" />
