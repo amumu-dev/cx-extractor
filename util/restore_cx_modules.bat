@@ -1,5 +1,10 @@
+::Win32 version
 
 cpan
 
-:: Win32 version
+:: backup
+autobundle
+
+
+:: restore
 install Bundle::Snapshot_2010_08_14_00
