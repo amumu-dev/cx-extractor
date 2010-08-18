@@ -1,10 +1,3 @@
-/**
- * @author Xin Chen
- * Created on 2009-11-11
- * Updated on 2010-08-09
- * Email:  xchen@ir.hit.edu.cn
- * Blog:   http://hi.baidu.com/爱心同盟_陈鑫
- */
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,8 +7,9 @@ import java.util.List;
  * 在线性时间内抽取主题类（新闻、博客等）网页的正文。
  * 采用了<b>基于行块分布函数</b>的方法，为保持通用性没有针对特定网站编写规则。
  * </p>
- * @author  Chen Xin
- * @version 1.0, 2009-11-11
+ * @author Chen Xin(xchen@ir.hit.edu.cn)
+ * Created on 2009-1-11
+ * Updated on 2010-08-09
  */
 public class TextExtract {
 	
@@ -99,6 +93,7 @@ public class TextExtract {
 		boolean boolstart = false, boolend = false;
 		text.setLength(0);
 		
+		StringBuilder buffer = new StringBuilder();
 		for (int i = 0; i < indexDistribution.size() - 1; i++) {
 			if (indexDistribution.get(i) > threshold && ! boolstart) {
 				if (indexDistribution.get(i+1).intValue() != 0 
@@ -116,14 +111,14 @@ public class TextExtract {
 					boolend = true;
 				}
 			}
-			StringBuilder tmp = new StringBuilder();
+			buffer.setLength(0);
 			if (boolend) {
 				//System.out.println(start+1 + "\t\t" + end+1);
 				for (int ii = start; ii <= end; ii++) {
 					if (lines.get(ii).length() < 5) continue;
-					tmp.append(lines.get(ii) + "\n");
+					buffer.append(lines.get(ii) + "\n");
 				}
-				String str = tmp.toString();
+				String str = buffer.toString();
 				//System.out.println(str);
 				if (str.contains("Copyright")  || str.contains("版权所有") ) continue; 
 				text.append(str);
