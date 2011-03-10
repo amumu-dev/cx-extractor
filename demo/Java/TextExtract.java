@@ -77,7 +77,7 @@ public class TextExtract {
 		source = Pattern.compile("<[aA]\\s+[Hh][Rr][Ee][Ff]=[\"|\']?([^>\"\' ]+)[\"|\']?\\s*[^>]*>([^>]+)</a>(\\s*.{0,"+FREQUENT_URL+"}\\s*<a\\s+href=[\"|\']?([^>\"\' ]+)[\"|\']?\\s*[^>]*>([^>]+)</[aA]>)+", Pattern.DOTALL).matcher(source).replaceAll("");
 		source = source.replaceAll("(?is)<.*?>", "");
 		source = source.replaceAll("(?is)\r\n", "\n");
-	System.out.println(source);
+
 		return source;
 	
 	}

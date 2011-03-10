@@ -56,6 +56,8 @@ public class UseDemo {
 
 		System.out.println("got html");
 		String html = new TextExtract().parse(content);
+		
+		System.out.println(html);
 	}
 
 
