@@ -3,16 +3,23 @@
  * Created on 2009-11-11
  * Updated on 2010-08-09
  * Email:  xchen@ir.hit.edu.cn
- * Blog:   http://hi.baidu.com/°®ĞÄÍ¬ÃË_³ÂöÎ
+ * Blog:   http://hi.baidu.com/çˆ±å¿ƒåŒç›Ÿ_é™ˆé‘«
  */
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.mozilla.intl.chardet.nsDetector;
+import org.mozilla.intl.chardet.nsICharsetDetectionObserver;
+import org.mozilla.intl.chardet.nsPSMDetector;
 
 
 /**
- * TextExtractor¹¦ÄÜ²âÊÔÀà.
+ * TextExtractoråŠŸèƒ½æµ‹è¯•ç±».
  */
 
 public class UseDemo {
@@ -20,18 +27,18 @@ public class UseDemo {
 	public static void main(String[] args) throws IOException {
 		
 		/* 
-		 * ²âÊÔÍøÕ¾£º
-		 * °Ù¶È²©¿Í¿Õ¼ä             http://hi.baidu.com/liyanhong/
-		 * ĞÂÀËÓéÀÖÒôÀÖĞÂÎÅÓëĞÅÏ¢	http://ent.sina.com.cn/music/roll.html
-		 * ÌÚÑ¶ÓéÀÖĞÂÎÅÓëĞÅÏ¢		http://ent.qq.com/m_news/mnews.htm
-		 * ËÑºüÒôÀÖĞÂÎÅ				http://music.sohu.com/news.shtml
-		 * ¹ş¶û±õ¹¤Òµ´óÑ§Ğ£ÄÚĞÅÏ¢Íø http://today.hit.edu.cn/
-		 * ¹ş¶û±õ¹¤Òµ´óÑ§Ğ£ÄÚĞÂÎÅÍø http://news.hit.edu.cn/
+		 * æµ‹è¯•ç½‘ç«™ï¼š
+		 * ç™¾åº¦åšå®¢ç©ºé—´             http://hi.baidu.com/liyanhong/
+		 * æ–°æµªå¨±ä¹éŸ³ä¹æ–°é—»ä¸ä¿¡æ¯	http://ent.sina.com.cn/music/roll.html
+		 * è…¾è®¯å¨±ä¹æ–°é—»ä¸ä¿¡æ¯		http://ent.qq.com/m_news/mnews.htm
+		 * æœç‹éŸ³ä¹æ–°é—»				http://music.sohu.com/news.shtml
+		 * å“ˆå°”æ»¨å·¥ä¸šå¤§å­¦æ ¡å†…ä¿¡æ¯ç½‘ http://today.hit.edu.cn/
+		 * å“ˆå°”æ»¨å·¥ä¸šå¤§å­¦æ ¡å†…æ–°é—»ç½‘ http://news.hit.edu.cn/
 		 */
 
 
-		/* ×¢Òâ£º±¾´¦Ö»ÎªÕ¹Ê¾³éÈ¡Ğ§¹û£¬²»´¦ÀíÍøÒ³±àÂëÎÊÌâ£¬getHTMLÖ»ÄÜ½ÓÊÕGBK±àÂëµÄÍøÒ³£¬·ñÔò»á³öÏÖÂÒÂë */
-		String content = getHTML(args[0]);
+		/* æ³¨æ„ï¼šæœ¬å¤„åªä¸ºå±•ç¤ºæŠ½å–æ•ˆæœï¼Œä¸å¤„ç†ç½‘é¡µç¼–ç é—®é¢˜ï¼ŒgetHTMLåªèƒ½æ¥æ”¶GBKç¼–ç çš„ç½‘é¡µï¼Œå¦åˆ™ä¼šå‡ºç°ä¹±ç  */
+		String content = new UseDemo().getHTML(args[0]);
 
 		// http://ent.sina.com.cn/y/2010-04-18/08332932833.shtml
 		// http://ent.qq.com/a/20100416/000208.htm
@@ -41,25 +48,88 @@ public class UseDemo {
 	
 
 		/* 
-		 * µ±´ı³éÈ¡µÄÍøÒ³ÕıÎÄÖĞÓöµ½³É¿éµÄĞÂÎÅ±êÌâÎ´ÌŞ³ıÊ±£¬Ö»ÒªÔö´ó´ËãĞÖµ¼´¿É¡£
-		 * Ïà·´£¬µ±ĞèÒª³éÈ¡µÄÕıÎÄÄÚÈİ³¤¶È½Ï¶Ì£¬±ÈÈçÖ»ÓĞÒ»¾ä»°µÄĞÂÎÅ£¬Ôò¼õĞ¡´ËãĞÖµ¼´¿É¡£
-		 * ãĞÖµÔö´ó£¬×¼È·ÂÊÌáÉı£¬ÕÙ»ØÂÊÏÂ½µ£»Öµ±äĞ¡£¬ÔëÉù»á´ó£¬µ«¿ÉÒÔ±£Ö¤³éµ½Ö»ÓĞÒ»¾ä»°µÄÕıÎÄ 
+		 * å½“å¾…æŠ½å–çš„ç½‘é¡µæ­£æ–‡ä¸­é‡åˆ°æˆå—çš„æ–°é—»æ ‡é¢˜æœªå‰”é™¤æ—¶ï¼Œåªè¦å¢å¤§æ­¤é˜ˆå€¼å³å¯ã€‚
+		 * ç›¸åï¼Œå½“éœ€è¦æŠ½å–çš„æ­£æ–‡å†…å®¹é•¿åº¦è¾ƒçŸ­ï¼Œæ¯”å¦‚åªæœ‰ä¸€å¥è¯çš„æ–°é—»ï¼Œåˆ™å‡å°æ­¤é˜ˆå€¼å³å¯ã€‚
+		 * é˜ˆå€¼å¢å¤§ï¼Œå‡†ç¡®ç‡æå‡ï¼Œå¬å›ç‡ä¸‹é™ï¼›å€¼å˜å°ï¼Œå™ªå£°ä¼šå¤§ï¼Œä½†å¯ä»¥ä¿è¯æŠ½åˆ°åªæœ‰ä¸€å¥è¯çš„æ­£æ–‡ 
 		 */
-		//TextExtract.setThreshold(76); // Ä¬ÈÏÖµ86
+		//TextExtract.setThreshold(76); // é»˜è®¤å€¼86
 
 		System.out.println("got html");
-		System.out.println(TextExtract.parse(content));
+		String html = new TextExtract().parse(content);
 	}
 
 
-	public static String getHTML(String strURL) throws IOException {
+	public String getHTML(String strURL) throws IOException {
 		URL url = new URL(strURL);
-		BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
-		String s = "";
-		StringBuilder sb = new StringBuilder("");
-		while ((s = br.readLine()) != null) {
-			sb.append(s + "\n");
+		BufferedInputStream in =  new BufferedInputStream(url.openStream());
+		byte[] bytes = new byte[1024000];
+		int len = -1;
+		int pos = 0;
+		while ((len = in.read(bytes, pos, bytes.length - pos)) != -1) {
+			pos += len;
 		}
-		return sb.toString();
+		
+		detectCharset(bytes);
+		
+		String html = null;
+		if (detCharset != null)
+		{
+			html = new String(bytes, 0, pos, this.detCharset);
+		}
+		else
+		{
+			return new String(bytes, 0, pos);
+		}
+		System.out.println("Detcharset = " + detCharset);
+		return html;
+	}
+	
+	private String detCharset = null;
+
+	private Pattern pGB2312 = Pattern.compile("GB2312", Pattern.CASE_INSENSITIVE);
+	private Pattern pUTF8 = Pattern.compile("(UTF8)|(UTF-8)", Pattern.CASE_INSENSITIVE);
+	
+	public void detectCharset(byte[] content)
+	{
+		String html = new String(content); 
+		Matcher m = pGB2312.matcher(html);
+		if (m.find())
+		{
+			detCharset = "gb2312";
+			return ;
+		}
+		m = pUTF8.matcher(html);
+		if (m.find())
+		{
+			detCharset = "utf-8";
+			return;
+		}
+		
+		int lang = nsPSMDetector.ALL;
+		nsDetector det = new nsDetector(lang);
+		det.Init(new nsICharsetDetectionObserver() {
+			public void Notify(String charset) {
+				detCharset = charset;
+			} 
+		});
+		boolean isAscii = true;
+
+		if (isAscii)
+			isAscii = det.isAscii(content, content.length);
+
+		if (!isAscii)
+			det.DoIt(content, content.length, false);
+
+		det.DataEnd();
+
+		boolean found = false;
+		if (isAscii) {
+			this.detCharset = "US-ASCII";
+			found = true;
+		}
+
+		if (!found && detCharset == null) {
+			detCharset = det.getProbableCharsets()[0];
+		}
 	}
 }
