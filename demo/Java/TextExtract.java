@@ -75,8 +75,13 @@ public class TextExtract {
 		source = source.replaceAll("</[sS][pP][aA][nN]>", "");
 
 		source = Pattern.compile("<[aA]\\s+[Hh][Rr][Ee][Ff]=[\"|\']?([^>\"\' ]+)[\"|\']?\\s*[^>]*>([^>]+)</a>(\\s*.{0,"+FREQUENT_URL+"}\\s*<a\\s+href=[\"|\']?([^>\"\' ]+)[\"|\']?\\s*[^>]*>([^>]+)</[aA]>)+", Pattern.DOTALL).matcher(source).replaceAll("");
-		source = source.replaceAll("(?is)<.*?>", "");
-		source = source.replaceAll("(?is)\r\n", "\n");
+		
+		//防止html中在<>中包括大于号的判断
+		source = source.replaceAll("<[^>'\"]*['\"].*['\"].*?>", "");
+
+		source = source.replaceAll("<.*?>", "");
+		source = source.replaceAll("<.*?>", "");
+		source = source.replaceAll("\r\n", "\n");
 
 		return source;
 	
@@ -187,7 +192,8 @@ public class TextExtract {
 	public static void main(String[] args)
 	{
 		System.out.println("===============");
-		String s = "<li>[缺席]<a href=\"http://news.163.com/11/0310/01/6UOGAH1500014AED.html\">刘翔因兼顾训练缺席多次政协讨论会</a> </li>\n                <li>[地价]<a href=\"http://news.163.com/11/0310/04/6UOQ20U000014JB6.html\">宗庆后：调控房价还需控地价及开发商利润</a> </li>\n                <li>[环保]<a href=\"http://news.163.com/11/0310/02/6UOIQA5B00014JB6.html\">陈光标：让“责任标语”无孔不入</a> </li>\n                <li>[限购]<a href=\"http://news.163.com/11/0310/01/6UOF9EP100014AED.html\">潘石屹：限购令立竿见影 50%房企三年内被淘汰</a> </li>";
-		System.out.println(TextExtract.preProcess(s));
+		String s = "<img  class='fit-image' onload='javascript:if(this.width>498)this.width=498;' />hello";
+		//source = source.replaceAll("<[^'\"]*['\"].*['\"].*?>", "");
+System.out.println(TextExtract.preProcess(s));
 	}
 }
