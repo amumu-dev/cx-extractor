@@ -53,38 +53,38 @@ namespace TextExtractorProgram
 
         private void extractTitle()
         {
-            string pattern = @"<title>(.*?)</title>";
-            Match m = Regex.Match(sourceHTML, pattern, RegexOptions.IgnoreCase);
+            string pattern = @"(?is)<title>(.*?)</title>";
+            Match m = Regex.Match(sourceHTML, pattern);
             if (m.Success)
             {
                 title = m.Groups[1].Value;
-                title = Regex.Replace(title, @"\s*", "", RegexOptions.IgnoreCase);
+                title = Regex.Replace(title, @"(?is)\s*", "");
             }
         }
 
         private void extractBody()
         {
-            string pattern = @"<body[\s\S]*</body>";
-            Match m = Regex.Match(sourceHTML, pattern, RegexOptions.IgnoreCase);
+            string pattern = @"(?is)<body.*?</body>";
+            Match m = Regex.Match(sourceHTML, pattern);
             if (m.Success)
                 textBody = m.ToString();
         }
 
         private void removeTags()
         {
-            string docType       = "<!DOCTYPE.*?>";
-            string comment       = "<!--.*?-->";
-            string js            = "<script.*?>.*?</script>";
-            string css           = "<style.*?>.*?</style>";
-            string specialChar   = "&.{2,6};|&#.{2,6};";
-            string otherTag      = "<.*?>";
+            string docType     = @"(?is)<!DOCTYPE.*?>";
+            string comment     = @"(?is)<!--.*?-->";
+            string js          = @"(?is)<script.*?>.*?</script>";
+            string css         = @"(?is)<style.*?>.*?</style>";
+            string specialChar = @"&.{2,8};|&#.{2,8};";
+            string otherTag    = @"(?is)<.*?>";
 
-            textBody = Regex.Replace(textBody, docType,     "", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-            textBody = Regex.Replace(textBody, comment,     "", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-            textBody = Regex.Replace(textBody, js,          "", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-            textBody = Regex.Replace(textBody, css,         "", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-            textBody = Regex.Replace(textBody, specialChar, "", RegexOptions.IgnoreCase);
-            textBody = Regex.Replace(textBody, otherTag,    "", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            textBody = Regex.Replace(textBody, docType,     "");
+            textBody = Regex.Replace(textBody, comment,     "");
+            textBody = Regex.Replace(textBody, js,          "");
+            textBody = Regex.Replace(textBody, css,         "");
+            textBody = Regex.Replace(textBody, specialChar, "");
+            textBody = Regex.Replace(textBody, otherTag,    "");
         }
 
         private void extractText()
@@ -92,7 +92,7 @@ namespace TextExtractorProgram
             // 统计去除空白字符后每个行块所含总字数
             lines = textBody.Split('\n');
             for (int i = 0; i < lines.Length; i++)
-                lines[i] = Regex.Replace(lines[i], @"\s*", "", RegexOptions.IgnoreCase);
+                lines[i] = Regex.Replace(lines[i], @"(?is)\s*", "");
 
             for (int i = 0; i < lines.Length - blockHeight; i++)
             {
