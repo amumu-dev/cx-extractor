@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -62,6 +63,7 @@ public class TextExtract {
 		return getText();
 	}
 	private static int FREQUENT_URL = 30;
+	private static Pattern links = Pattern.compile("<[aA]\\s+[Hh][Rr][Ee][Ff]=[\"|\']?([^>\"\' ]+)[\"|\']?\\s*[^>]*>([^>]+)</a>(\\s*.{0,"+FREQUENT_URL+"}\\s*<a\\s+href=[\"|\']?([^>\"\' ]+)[\"|\']?\\s*[^>]*>([^>]+)</[aA]>){2,100}", Pattern.DOTALL);
 	private static String preProcess(String source) {
 		
 		source = source.replaceAll("(?is)<!DOCTYPE.*?>", "");
@@ -74,7 +76,14 @@ public class TextExtract {
 		source = source.replaceAll("<[sS][pP][aA][nN].*?>", "");
 		source = source.replaceAll("</[sS][pP][aA][nN]>", "");
 
-		source = Pattern.compile("<[aA]\\s+[Hh][Rr][Ee][Ff]=[\"|\']?([^>\"\' ]+)[\"|\']?\\s*[^>]*>([^>]+)</a>(\\s*.{0,"+FREQUENT_URL+"}\\s*<a\\s+href=[\"|\']?([^>\"\' ]+)[\"|\']?\\s*[^>]*>([^>]+)</[aA]>)+", Pattern.DOTALL).matcher(source).replaceAll("");
+		int len = source.length();
+		while ((source = links.matcher(source).replaceAll("")).length() != len)
+		{
+			len = source.length();
+		}
+			;//continue;
+		
+		//source = links.matcher(source).replaceAll("");
 		
 		//防止html中在<>中包括大于号的判断
 		source = source.replaceAll("<[^>'\"]*['\"].*['\"].*?>", "");
