@@ -1,0 +1,2 @@
+win7可直接运行，
+其他平台需要.net framework 3.5

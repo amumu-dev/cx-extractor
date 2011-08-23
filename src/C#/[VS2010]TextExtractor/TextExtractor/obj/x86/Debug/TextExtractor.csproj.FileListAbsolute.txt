@@ -1,0 +1,13 @@
+D:\Project\cSharp\TextExtractor\TextExtractor\bin\Debug\TextExtractor.exe.config
+D:\Project\cSharp\TextExtractor\TextExtractor\bin\Debug\TextExtractor.exe
+D:\Project\cSharp\TextExtractor\TextExtractor\bin\Debug\TextExtractor.pdb
+D:\Project\cSharp\TextExtractor\TextExtractor\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Project\cSharp\TextExtractor\TextExtractor\obj\x86\Debug\TextExtractor.Form1.resources
+D:\Project\cSharp\TextExtractor\TextExtractor\obj\x86\Debug\TextExtractor.Properties.Resources.resources
+D:\Project\cSharp\TextExtractor\TextExtractor\obj\x86\Debug\GenerateResource-ResGen.read.1.tlog
+D:\Project\cSharp\TextExtractor\TextExtractor\obj\x86\Debug\GenerateResource-ResGen.write.1.tlog
+D:\Project\cSharp\TextExtractor\TextExtractor\obj\x86\Debug\TextExtractor.exe
+D:\Project\cSharp\TextExtractor\TextExtractor\obj\x86\Debug\TextExtractor.pdb
+D:\Project\Google\textExtractor\src\C#\TextExtractor\TextExtractor\bin\Debug\TextExtractor.exe.config
+D:\Project\Google\textExtractor\src\C#\TextExtractor\TextExtractor\obj\x86\Debug\TextExtractor.exe
+D:\Project\Google\textExtractor\src\C#\TextExtractor\TextExtractor\obj\x86\Debug\TextExtractor.pdb
