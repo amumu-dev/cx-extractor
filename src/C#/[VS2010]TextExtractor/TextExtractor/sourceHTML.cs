@@ -21,6 +21,7 @@ namespace TextExtractor
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method    = "GET";
             request.Accept    = "*/*";
+            request.Headers.Add("Accept-Encoding", ""); // 禁止压缩
             request.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)";
 
             //服务器返回的内容

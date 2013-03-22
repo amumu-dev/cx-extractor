@@ -30,7 +30,7 @@ namespace TextExtractor
         public string title;         // 网页标题
         public string webPreview;    // 预览页面（去除JS和图片）
 
-        private bool bJoinMethond;   // ture时使用拼接方法，否则使用直接提取
+        private bool bJoinMethond;   // ture: 拼接, false: 直接提取
 
         // 隐藏默认构造函数
         private TextExtract()
@@ -72,7 +72,7 @@ namespace TextExtractor
             if (m.Success)
             {
                 title = m.Groups[1].Value;
-                title = Regex.Replace(title, @"(?is)\s*", "");
+                title = Regex.Replace(title, @"(?is)\s+", " ").Trim();
             }
         }
 
@@ -103,15 +103,17 @@ namespace TextExtractor
 
         private void extractText()
         {
-            // 去除每行的空白字符
+            // 将连续的空白符替换为单个空格
+            // 并去除每行首尾的空白符
             lines = textBody.Split('\n');
             for (int i = 0; i < lines.Length; i++)
-                lines[i] = Regex.Replace(lines[i], @"(?is)\s*", "");
+                lines[i] = Regex.Replace(lines[i], @"(?is)\s+", " ").Trim();
 
             // 去除上下紧邻行为空,且该行字数小于30的行
             for (int i = 1; i < lines.Length - 1; i++)
             {
-                if (lines[i].Length < 30 && 0 == lines[i-1].Length && 0 == lines[i+1].Length)
+                if (lines[i].Length > 0 && lines[i].Length < 30
+                    && 0 == lines[i-1].Length && 0 == lines[i+1].Length)
                     lines[i] = "";
             }
 

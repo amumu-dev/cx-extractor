@@ -39,11 +39,11 @@
             this.tabPageWeb = new System.Windows.Forms.TabPage();
             this.webBrowserPreview = new System.Windows.Forms.WebBrowser();
             this.groupBoxCodeType = new System.Windows.Forms.GroupBox();
-            this.groupBoxMethod = new System.Windows.Forms.GroupBox();
-            this.radioButtonUTF8 = new System.Windows.Forms.RadioButton();
             this.radioButtonGB18030 = new System.Windows.Forms.RadioButton();
-            this.radioButtonJoin = new System.Windows.Forms.RadioButton();
+            this.radioButtonUTF8 = new System.Windows.Forms.RadioButton();
+            this.groupBoxMethod = new System.Windows.Forms.GroupBox();
             this.radioButtonOnce = new System.Windows.Forms.RadioButton();
+            this.radioButtonJoin = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPageText.SuspendLayout();
             this.tabPageWeb.SuspendLayout();
@@ -127,9 +127,9 @@
             this.richTextBoxText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBoxText.Location = new System.Drawing.Point(-4, -3);
+            this.richTextBoxText.Location = new System.Drawing.Point(6, 6);
             this.richTextBoxText.Name = "richTextBoxText";
-            this.richTextBoxText.Size = new System.Drawing.Size(688, 474);
+            this.richTextBoxText.Size = new System.Drawing.Size(668, 456);
             this.richTextBoxText.TabIndex = 0;
             this.richTextBoxText.Text = "";
             // 
@@ -167,16 +167,15 @@
             this.groupBoxCodeType.TabIndex = 5;
             this.groupBoxCodeType.TabStop = false;
             // 
-            // groupBoxMethod
+            // radioButtonGB18030
             // 
-            this.groupBoxMethod.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxMethod.Controls.Add(this.radioButtonOnce);
-            this.groupBoxMethod.Controls.Add(this.radioButtonJoin);
-            this.groupBoxMethod.Location = new System.Drawing.Point(590, 50);
-            this.groupBoxMethod.Name = "groupBoxMethod";
-            this.groupBoxMethod.Size = new System.Drawing.Size(121, 32);
-            this.groupBoxMethod.TabIndex = 0;
-            this.groupBoxMethod.TabStop = false;
+            this.radioButtonGB18030.AutoSize = true;
+            this.radioButtonGB18030.Location = new System.Drawing.Point(56, 12);
+            this.radioButtonGB18030.Name = "radioButtonGB18030";
+            this.radioButtonGB18030.Size = new System.Drawing.Size(65, 16);
+            this.radioButtonGB18030.TabIndex = 1;
+            this.radioButtonGB18030.Text = "GB18030";
+            this.radioButtonGB18030.UseVisualStyleBackColor = true;
             // 
             // radioButtonUTF8
             // 
@@ -190,15 +189,27 @@
             this.radioButtonUTF8.Text = "UTF8";
             this.radioButtonUTF8.UseVisualStyleBackColor = true;
             // 
-            // radioButtonGB18030
+            // groupBoxMethod
             // 
-            this.radioButtonGB18030.AutoSize = true;
-            this.radioButtonGB18030.Location = new System.Drawing.Point(56, 12);
-            this.radioButtonGB18030.Name = "radioButtonGB18030";
-            this.radioButtonGB18030.Size = new System.Drawing.Size(65, 16);
-            this.radioButtonGB18030.TabIndex = 1;
-            this.radioButtonGB18030.Text = "GB18030";
-            this.radioButtonGB18030.UseVisualStyleBackColor = true;
+            this.groupBoxMethod.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxMethod.Controls.Add(this.radioButtonOnce);
+            this.groupBoxMethod.Controls.Add(this.radioButtonJoin);
+            this.groupBoxMethod.Location = new System.Drawing.Point(590, 50);
+            this.groupBoxMethod.Name = "groupBoxMethod";
+            this.groupBoxMethod.Size = new System.Drawing.Size(121, 32);
+            this.groupBoxMethod.TabIndex = 0;
+            this.groupBoxMethod.TabStop = false;
+            // 
+            // radioButtonOnce
+            // 
+            this.radioButtonOnce.AutoSize = true;
+            this.radioButtonOnce.Location = new System.Drawing.Point(56, 10);
+            this.radioButtonOnce.Name = "radioButtonOnce";
+            this.radioButtonOnce.Size = new System.Drawing.Size(59, 16);
+            this.radioButtonOnce.TabIndex = 1;
+            this.radioButtonOnce.TabStop = true;
+            this.radioButtonOnce.Text = "不拼接";
+            this.radioButtonOnce.UseVisualStyleBackColor = true;
             // 
             // radioButtonJoin
             // 
@@ -211,17 +222,6 @@
             this.radioButtonJoin.TabStop = true;
             this.radioButtonJoin.Text = "拼接";
             this.radioButtonJoin.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonOnce
-            // 
-            this.radioButtonOnce.AutoSize = true;
-            this.radioButtonOnce.Location = new System.Drawing.Point(56, 10);
-            this.radioButtonOnce.Name = "radioButtonOnce";
-            this.radioButtonOnce.Size = new System.Drawing.Size(59, 16);
-            this.radioButtonOnce.TabIndex = 1;
-            this.radioButtonOnce.TabStop = true;
-            this.radioButtonOnce.Text = "不拼接";
-            this.radioButtonOnce.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
